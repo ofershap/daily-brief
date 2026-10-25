@@ -66,7 +66,39 @@
 
 <div dir="rtl">
 
-## התחלה מהירה (דמו, בלי התחברות)
+## איך מתחילים
+
+בוחרים לפי הסוכן שיש לכם:
+
+### אינסטינקט (איציק)
+
+<a href="https://wa.me/16508702892?text=%D7%AA%D7%A2%D7%A9%D7%94+%D7%9C%D7%99+%D7%92%D7%9D+%D7%9B%D7%96%D7%94%3A+https%3A%2F%2Fgithub.com%2Fofershap%2Fmashov-parent-brief"><img src="https://img.shields.io/badge/%D7%A9%D7%9C%D7%97%D7%95_%D7%9C%D7%90%D7%99%D7%A6%D7%99%D7%A7_%D7%91%D7%95%D7%95%D7%90%D7%98%D7%A1%D7%90%D7%A4-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="שלחו לאיציק בוואטסאפ" /></a>
+
+לחיצה פותחת וואטסאפ עם הודעה מוכנה לאינסטינקט שלכם. שולחים, והוא מגדיר לכם את הבריף מקצה לקצה.
+
+### Tab
+
+<a href="https://tab.bot/"><img src="https://img.shields.io/badge/%D7%A4%D7%AA%D7%97%D7%95_%D7%90%D7%AA_Tab-111111?style=for-the-badge" alt="פתחו את Tab" /></a>
+
+שולחים לטאב שלכם את הקישור לריפו הזה עם המשפט: "תעשה לי גם כזה".
+
+### Claude Code / סוכן קוד
+
+מדביקים לסוכן:
+
+```
+תגדיר לי את הפרויקט הזה: https://github.com/ofershap/mashov-parent-brief - ההוראות ב-AGENTS.md
+```
+
+### בוט טקסט אחר (Pally, Muse ודומים)
+
+שולחים לבוט את [המתכון](recipes/daily-brief.he.md) יחד עם הקישור לריפו הזה.
+
+---
+
+מפתח? רוצה לנסות על המחשב שלכם? הנה ההוראות:
+
+### התחלה מהירה (דמו, בלי התחברות)
 
 ```bash
 git clone https://github.com/ofershap/mashov-parent-brief.git
@@ -75,7 +107,7 @@ pip install -e .
 daily-brief --demo
 ```
 
-## הגדרה אמיתית מול משו״ב
+### הגדרה אמיתית מול משו״ב
 
 ```bash
 pip install -e ".[mashov]"
@@ -94,6 +126,11 @@ daily-brief --collector mashov
 0 7 * * 0-4  cd /path/to/daily-brief && .venv/bin/daily-brief --collector mashov --out out/brief.txt
 ```
 
+<details>
+<summary>איך זה בנוי בפנים (ארכיטקטורה, למתעניינים)</summary>
+
+מתאם הוא החלק שיודע לדבר עם מקור נתונים אחד (למשל משו״ב) ולהביא ממנו את המידע לבריף.
+
 ## ארכיטקטורה: אגנוסטי למקור, מתאם ראשון משו״ב
 
 ```
@@ -107,6 +144,8 @@ Webtop (עתידי)       (models.py)              הבוט שלך שולח
 מתאם חדש מממש חוזה אחד (`collect() -> DayBrief`). המתאם הראשון משתמש
 ב-[pymashov](https://github.com/t0mer/pymashov) (Apache-2.0) כתלות, עם
 סשן אחד משותף לכל הילדים כדי להימנע מהצפת התחברויות.
+
+</details>
 
 ## חיבור הבוט שלך
 
