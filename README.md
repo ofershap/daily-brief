@@ -2,9 +2,9 @@
   <img src="assets/logo.svg" alt="mashov-parent-brief" width="110" height="110" />
 </p>
 
-<h1 align="center">mashov-parent-brief</h1>
+<h1 align="center">תן לבוט שלך משו״ב</h1>
 
-<h2 align="center">תן לבוט שלך משו״ב</h2>
+<p align="center"><code>mashov-parent-brief</code></p>
 
 <p align="center">
   מערכת שעות, שיעורי בית והודעות ממשו״ב, בהודעת בוקר אחת.
