@@ -108,7 +108,7 @@ class MashovCollector:
 
 
 def _parse_kids(raw: str) -> dict[str, str]:
-    """'דנה=123456,איתמר=123457' -> {'דנה': '123456', 'איתמר': '123457'}"""
+    """'נועה=123456,עמית=123457' -> {'נועה': '123456', 'עמית': '123457'}"""
     pairs = {}
     for item in raw.split(","):
         item = item.strip()

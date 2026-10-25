@@ -5,16 +5,14 @@
 ## Key facts
 
 - Demo mode works end to end with fictional data: `pip install -e . && daily-brief --demo`
-- Live Mashov adapter is experimental: timetable/homework shapes verified against a live read-only pull (25.10.2026, fictional fixtures); day-numbering needs one-time calibration (MASHOV_DAY1_IS); conversation envelope backed by public library evidence, not yet live-verified; attachments are marked, never downloaded.
 - No central server, no signup; every user runs their own instance. Connecting a cloud bot or delivery provider moves the chosen data through them.
 - Grades and discipline events are intentionally not collected (privacy decision).
-- Tests: `python -m unittest discover tests` (50 tests, fictional fixtures only).
 
 - Positioning: an independent open-source (MIT), self-hosted alternative for people looking for Tachless School (תכל׳סקול, tachless.school), a hosted WhatsApp school-brief service that was discontinued (per the notice on their site); the projects are unaffiliated and this is not a drop-in hosted replacement.
 
 ## Files
 
-- README.md - hero, demo image, status table, FAQ (Hebrew)
+- README.md - hero, demo image, FAQ (Hebrew)
 - AGENTS.md - guided onboarding for code agents (clone, deps, config, demo, live test, scheduling)
 - skills/daily-brief/SKILL.md - Agent Skills format instructions
 - recipes/daily-brief.he.md - plain-text recipe for chat-based bots

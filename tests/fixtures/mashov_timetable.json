@@ -2,7 +2,7 @@
   {
     "timeTable": {"groupId": 101, "day": 1, "lesson": 1, "roomNum": "חדר 12", "weeks": 0},
     "groupDetails": {"groupId": 101, "groupName": "DEMO GROUP A", "subjectName": "מתמטיקה",
-      "groupTeachers": [{"teacherGuid": "00000000-0000-4000-8000-000000000001", "teacherName": "ד״ר לוי"}],
+      "groupTeachers": [{"teacherGuid": "00000000-0000-4000-8000-000000000001", "teacherName": "רוני"}],
       "groupInactiveTeachers": []}
   },
   {

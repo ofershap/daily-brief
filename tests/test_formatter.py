@@ -19,12 +19,12 @@ class FormatterTest(unittest.TestCase):
         self.assertTrue(self.text.startswith("🎒 *בריף בית ספר"))
 
     def test_all_kids_present(self):
-        self.assertIn("*דנה*", self.text)
-        self.assertIn("*איתמר*", self.text)
+        self.assertIn("*נועה*", self.text)
+        self.assertIn("*עמית*", self.text)
 
     def test_lessons_and_homework_lines(self):
         self.assertIn("🕐 *מערכת:*", self.text)
-        self.assertIn("08:00 מתמטיקה (ד״ר לוי)", self.text)
+        self.assertIn("08:00 מתמטיקה (רוני)", self.text)
         self.assertIn("📚 *שיעורי בית:* מתמטיקה - עמ׳ 42 תרגילים 1-5 (להגשה 3.11)", self.text)
 
     def test_events_and_notes(self):

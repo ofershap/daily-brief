@@ -25,9 +25,9 @@ def collect() -> DayBrief:
         weekday_he="ראשון",
         kids=[
             KidBrief(
-                name="דנה",
+                name="נועה",
                 lessons=[
-                    Lesson(time="08:00", subject="מתמטיקה", teacher="ד״ר לוי"),
+                    Lesson(time="08:00", subject="מתמטיקה", teacher="רוני"),
                     Lesson(time="09:00", subject="אנגלית"),
                     Lesson(time="10:00", subject="ספורט"),
                 ],
@@ -35,7 +35,7 @@ def collect() -> DayBrief:
                 events=[SchoolEvent(title="טיול שנתי", note="להביא אישור הורה חתום", date="3.11.2026")],
             ),
             KidBrief(
-                name="איתמר",
+                name="עמית",
                 lessons=[
                     Lesson(time="08:00", subject="עברית"),
                     Lesson(time="09:00", subject="מדעים", room="מעבדה 2"),
