@@ -102,6 +102,20 @@ class MashovAdapterTest(unittest.TestCase):
         kid = map_kid("דנה", dup, [], SUNDAY, day1_weekday="ראשון")
         self.assertEqual(len(kid.lessons), 1)
 
+class MashovMessagesEnvelopeTest(unittest.TestCase):
+    """מעטפת השיחות מגובה בספרייה הציבורית yardnsm/node-mashov (קוד+פיקסצ׳ר):
+    sender מ-messages[0].senderName, תאריך מ-sendTime."""
+
+    def test_public_envelope_shape_maps(self):
+        import json as _json
+        from daily_brief.collectors.mashov import map_messages
+        rows = _json.loads((FIXTURES / "mashov_conversations.json").read_text(encoding="utf-8"))
+        msgs = map_messages(rows)
+        self.assertEqual(msgs[0].sender, "המורה שרה")
+        self.assertEqual(msgs[0].subject, "להביא אישור לטיול עד מחר")
+        self.assertEqual(msgs[0].date, "2026-10-31T18:04:00")
+        self.assertFalse(msgs[0].has_attachment)
+        self.assertTrue(msgs[1].has_attachment)
 
 if __name__ == "__main__":
     unittest.main()

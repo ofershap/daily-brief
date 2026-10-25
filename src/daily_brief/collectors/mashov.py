@@ -12,8 +12,9 @@
   subjectName. lessonDate הוא תאריך מתן השיעור — אינו מועד הגשה, ולא ממופה
   ככזה. מספור הימים (day) לא אומת ולכן לא מנוהל לפי הנחה: סינון ליום הנוכחי
   פעיל רק אחרי כיול והגדרת MASHOV_DAY1_IS (ראו .env.example).
-- צורת השיחות (conversations) טרם אומתה מול המקור; המיפוי כאן מבוסס צורה
-  משוערת ונכשל סגור אם המבנה האמיתי שונה.
+- צורת השיחות (conversations) מגובה בקוד ובפיקסצ׳ר הבדיקה של הספרייה
+  הציבורית העצמאית yardnsm/node-mashov (מעטפת + שמות שדות); טרם אומתה מול
+  החשבון החי — נכשל סגור על כל סטייה מהצורה הזו.
 - לא נצפה מטא-מידע עימוד ברשימות מערכת/שיעורי-בית; זה אינו הוכחה שהרשימה
   מלאה. אם יתגלה חיתוך, יתועד בכיול החי.
 - המתאם נכשל-סגור: מבנה לא מוכר, מפתחות חסרים, או כשל התחברות — CollectorError
@@ -33,10 +34,12 @@ from ..models import WEEKDAYS_HE, DayBrief, Homework, KidBrief, Lesson, SchoolMe
 
 REQUIRED_ENV = ("MASHOV_USERNAME", "MASHOV_PASSWORD", "MASHOV_SEMEL", "MASHOV_KIDS")
 
-# שיחות דואר: צורה משוערת בלבד (לא אומתה מול המקור) — נכשל סגור על סטייה.
-_MSG_SENDER_KEYS = ("sender", "from", "senderName")
+# שיחות דואר: צורת המעטפת מגובה בספרייה הציבורית העצמאית yardnsm/node-mashov
+# (קוד + פיקסצ׳ר בדיקה): רשימה של {conversationId, subject, sendTime, isNew,
+# hasAttachments, messages: [{messageId, senderName, subject, sendTime}]}.
+# טרם אומתה מול החשבון החי — נכשל סגור על סטייה.
 _MSG_SUBJECT_KEYS = ("subject", "title")
-_MSG_DATE_KEYS = ("date", "sentDate", "sendDate")
+_MSG_DATE_KEYS = ("sendTime", "date", "sentDate", "sendDate")
 _MSG_ATTACH_KEYS = ("hasAttachments", "hasAttachment", "attachments")
 
 
@@ -268,8 +271,13 @@ def map_messages(conversations) -> list[SchoolMessage]:
         has_attachment = any(bool(raw.get(k)) for k in _MSG_ATTACH_KEYS) or (
             isinstance(attachments, list) and len(attachments) > 0
         )
+        sender = _first_key(raw, ("senderName", "sender", "from"))
+        if not sender:
+            msgs = raw.get("messages")
+            if isinstance(msgs, list) and msgs and isinstance(msgs[0], dict):
+                sender = str(msgs[0].get("senderName") or "")
         messages.append(SchoolMessage(
-            sender=_first_key(raw, _MSG_SENDER_KEYS),
+            sender=sender,
             subject=subject,
             date=_first_key(raw, _MSG_DATE_KEYS),
             has_attachment=has_attachment,
