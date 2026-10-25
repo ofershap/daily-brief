@@ -4,12 +4,12 @@
 
 <h1 align="center">mashov-parent-brief</h1>
 
-<h2 align="center">מערכת, שיעורי בית והודעות מבית הספר —<br/>בהודעת בוקר אחת, ישר לבוט שלכם</h2>
+<h2 align="center">מערכת, שיעורי בית והודעות מבית הספר —<br/>בהודעת בוקר אחת מסודרת</h2>
 
 <p align="center">
   קוד פתוח (MIT) שרץ <strong>אצלכם</strong>: כל בוקר אוסף משו״ב את מערכת השעות, שיעורי הבית<br/>
   והודעות המורים של כל הילדים, מצליב עם היומן המשפחתי, ומפיק הודעה אחת מסודרת<br/>
-  בסגנון וואטסאפ שהבוט האישי שלכם שולח אליכם. בלי שרת מרכזי, בלי רישום.
+  בסגנון וואטסאפ — שאפשר לחבר לבוט האישי שלכם (הוראות מצורפות). בלי שרת מרכזי, בלי רישום.
 </p>
 
 <p align="center">
@@ -28,16 +28,9 @@
 
 <div dir="rtl">
 
-**מחפשים את תכל׳סקול?** השירות המרכזי הופסק לאחרונה — לפי ההודעה שפורסמה
-[באתר שלהם](https://tachless.school): ״בעקבות פנייה מצד גורם הקשור לאחת
-ממערכות בתי הספר״. הפרויקט הזה עצמאי ואין לו שום קשר אליהם — אבל אם הנתון
-הזה גרם לכם לחשוב פעמיים על להפקיד את נתוני הילדים אצל שירות שיכול להיסגר,
-זו חלופה בקוד פתוח שרצה אצלכם: self-hosted, בלי שרת מרכזי, והחשבון נשאר
-שלכם. שימו לב: המתאם החי עדיין **ניסיוני**, וצריך להפעיל אותו בעצמכם — זה לא
-שירות מתארח מוכן-לשימוש.
-
-הגעתם מחיפוש כמו ״משוב הורים״, ״משוב מערכת שעות״, ״משוב שיעורי בית״ או
-״משוב וואטסאפ״? בדיוק בשביל זה הריפו הזה כאן.
+**מחפשים את תכל׳סקול?** השירות הופסק ([הודעה באתרם](https://tachless.school)).
+הפרויקט הזה עצמאי ואין לו קשר אליהם — חלופה בקוד פתוח, self-hosted וניסיונית,
+שהנתונים בה נשארים אצלכם.
 
 </div>
 
@@ -175,6 +168,9 @@ Webtop (עתידי)       (models.py)              הבוט שלך שולח
 
 ## שאלות ותשובות
 
+**איך מקבלים מערכת שעות, שיעורי בית והודעות ממורים ממשו״ב אל וואטסאפ?**
+מתקינים את הריפו אצלכם (דמו בלי התחברות: `pip install -e . && daily-brief --demo`), מגדירים חיבור לחשבון ההורה שלכם במשו״ב, ומתזמנים ריצת בוקר. הפלט הוא הודעת טקסט אחת בסגנון וואטסאפ שאפשר לחבר לבוט האישי שלכם — ההוראות ב-[AGENTS.md](AGENTS.md), ותאימות לבוט ספציפי טרם אומתה.
+
 **למי זה מיועד?**
 להורים בישראל שבית הספר של ילדיהם עובד עם משו״ב, ושרוצים הודעת בוקר אחת מסודרת במקום לצלול כל יום לכמה מסכים.
 
@@ -201,14 +197,14 @@ Webtop (עתידי)       (models.py)              הבוט שלך שולח
 
 ## פרויקטים דומים ומקורות
 
-המתאם בנוי על [pymashov](https://github.com/t0mer/pymashov) (Apache-2.0, פעיל).
+המתאם בנוי על [pymashov](https://github.com/t0mer/pymashov) (Apache-2.0; עדכון קוד אחרון: 9.2026).
 פרויקטים נוספים סביב משו״ב ומערכות בית-ספר, לרפרנס ולהשוואה:
 
-- [mitekk/mashov](https://github.com/mitekk/mashov) — בריף הורים RTL למשו״ב (פעיל, 2026)
-- [yardnsm/node-mashov](https://github.com/yardnsm/node-mashov) — עטיפת Node.js; צורת ההודעות כאן מגובה בקוד ובפיקסצ׳רים שלהם (לא מתוחזק מ-2023)
-- [micaelillos/MashovAPI](https://github.com/micaelillos/MashovAPI) — עטיפת Python/Node ישנה (2020; ייתכן שכבר לא עובדת מול ה-API הנוכחי)
-- [AmitMarcus/MashovMCP](https://github.com/AmitMarcus/MashovMCP) — שרת MCP למשו״ב
-- [תכל׳סקול](https://tachless.school) — שירות מרכזי (לא קוד פתוח) לסיכומי וואטסאפ משו״ב ו-Webtop; **הופסק** (הודעה באתרם)
+- [mitekk/mashov](https://github.com/mitekk/mashov) — בריף הורים RTL למשו״ב (עדכון קוד אחרון: 6.2026)
+- [yardnsm/node-mashov](https://github.com/yardnsm/node-mashov) — עטיפת Node.js; צורת ההודעות כאן מגובה בקוד ובפיקסצ׳רים שלהם (עדכון קוד אחרון: 2023)
+- [micaelillos/MashovAPI](https://github.com/micaelillos/MashovAPI) — עטיפת Python/Node (עדכון קוד אחרון: 2020)
+- [AmitMarcus/MashovMCP](https://github.com/AmitMarcus/MashovMCP) — שרת MCP למשו״ב (עדכון קוד אחרון: 11.2025)
+- [תכל׳סקול](https://tachless.school) — שירות מרכזי (לא קוד פתוח) לסיכומי וואטסאפ משו״ב ו-Webtop; **הופסק** — לפי ההודעה באתרם, בעקבות פנייה מצד גורם הקשור לאחת ממערכות בתי הספר
 
 ## רישיון
 
@@ -219,7 +215,7 @@ MIT (הריפו הזה). pymashov היא Apache-2.0 ומשמשת כתלות חי
 
 ## Author
 
-[![Made by ofershap](https://gitshow.dev/api/card/ofershap)](https://gitshow.dev/ofershap)
+**[Ofer Shapira](https://github.com/ofershap)** · [gitshow.dev/ofershap](https://gitshow.dev/ofershap)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/ofershap)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat&logo=github&logoColor=white)](https://github.com/ofershap)
