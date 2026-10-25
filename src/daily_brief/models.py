@@ -28,6 +28,7 @@ class Homework:
 class SchoolEvent:
     title: str
     note: str = ""
+    date: str = ""     # DD.MM.YYYY או "" אם המקור לא סיפק
 
 
 @dataclass
@@ -79,7 +80,18 @@ class DayBrief:
     messages: list[SchoolMessage] = field(default_factory=list)
     calendar_events: list[CalendarEvent] = field(default_factory=list)
     conflicts: list[SourceConflict] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
     sources: list[SourceStatus] = field(default_factory=list)
 
 
 WEEKDAYS_HE = ["שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת", "ראשון"]
+
+
+def weekday_he(date_str: str) -> str:
+    """'3.11.2026' -> 'שלישי', מחושב מלוח השנה האמיתי. בלתי תקין -> ''."""
+    from datetime import date as _date
+    try:
+        day, month, year = (int(part) for part in date_str.split("."))
+        return WEEKDAYS_HE[_date(year, month, day).weekday()]
+    except (ValueError, AttributeError):
+        return ""

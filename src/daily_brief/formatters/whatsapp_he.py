@@ -37,6 +37,10 @@ def format_brief(brief: DayBrief) -> str:
         )
     if brief.conflicts:
         lines.append("")
+    for warning in brief.warnings:
+        lines.append(f"⚠️ *בדיקת תאריכים:* {warning}")
+    if brief.warnings:
+        lines.append("")
     failed = [src for src in brief.sources if not src.ok]
     if failed:
         for src in failed:
@@ -63,7 +67,8 @@ def _format_kid(kid: KidBrief, emoji: str) -> list[str]:
         lines.append(f"📚 *שיעורי בית:* {homework}")
     for event in kid.events:
         note = f" — {event.note}" if event.note else ""
-        lines.append(f"📣 *אירוע:* {event.title}{note}")
+        date = f" ({event.date})" if event.date else ""
+        lines.append(f"📣 *אירוע:* {event.title}{date}{note}")
     for note in kid.notes:
         lines.append(f"✏️ {note}")
     return lines

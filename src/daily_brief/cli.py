@@ -56,21 +56,25 @@ def main(argv: list[str] | None = None) -> None:
     # יומן אופציונלי: BRIEF_ICS (נתיב קובץ מקומי או URL). כשל = שורת ⚠️ בבריף.
     ics_source = os.environ.get("BRIEF_ICS", "")
     if ics_source:
-        from .collectors.ics import collect as collect_ics, events_on, find_conflicts
+        from .collectors.ics import collect as collect_ics, events_on, find_conflicts, stale_weekday_notes
         from datetime import date as _date
         from .models import SourceStatus
         try:
             calendar_events = collect_ics(ics_source)
             brief.calendar_events = events_on(calendar_events, _date.today())
             school_events = [event for kid in brief.kids for event in kid.events]
-            brief.conflicts = find_conflicts(
-                school_events, calendar_events, brief.date
-            )
+            brief.conflicts = find_conflicts(school_events, calendar_events)
             brief.sources.append(SourceStatus(name="יומן ICS", ok=True))
         except Exception as exc:
             brief.sources.append(SourceStatus(
                 name="יומן ICS", ok=False, detail=f"{type(exc).__name__}: {exc}"
             ))
+
+    # בדיקת עקביות: יום שבוע שרשום בכותרת אירוע מול התאריך המחושב
+    from .collectors.ics import stale_weekday_notes as _stale
+    from .models import weekday_he
+    all_events = [event for kid in brief.kids for event in kid.events] + brief.calendar_events
+    brief.warnings.extend(_stale(all_events, weekday_he))
 
     # סמן ריצה אחרונה: הודעות חדשות מסומנות 🆕; אין "חדש" כפול בריצה חוזרת.
     from .state import load_last_success, save_success
@@ -85,7 +89,7 @@ def main(argv: list[str] | None = None) -> None:
                     sent = sent.replace(tzinfo=timezone.utc)
                 msg.is_new = sent > last_success
             except ValueError:
-                msg.is_new = False  # תאריך לא מפוענח = לא מסומן חדש
+                pass  # תאריך לא מפוענח: משאירים את סימון המתאם כפי שהוא
 
     text = format_brief(brief)
     save_success(state_path)  # נכתב רק אחרי הפקה מוצלחת

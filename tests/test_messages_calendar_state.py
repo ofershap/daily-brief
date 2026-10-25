@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from daily_brief.collectors.ics import events_on, find_conflicts, parse_ics
 from daily_brief.collectors.mashov import CollectorError, map_messages
 from daily_brief.cli import _load_env_file
-from daily_brief.models import SchoolEvent
+from daily_brief.models import SchoolEvent, weekday_he
 from daily_brief.state import load_last_success, save_success
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
@@ -51,15 +51,21 @@ class CalendarTest(unittest.TestCase):
         self.assertEqual([e.title for e in on_sunday], ["מפגש הורים (בדוי)"])
 
     def test_dated_source_conflict_reported(self):
-        school = [SchoolEvent(title="טיול שנתי ביום שלישי")]
-        conflicts = find_conflicts(school, self.events, "1.11.2026")
+        school = [SchoolEvent(title="טיול שנתי ביום שלישי", date="3.11.2026")]
+        conflicts = find_conflicts(school, self.events)
         self.assertEqual(len(conflicts), 1)
+        self.assertEqual(conflicts[0].date_a, "3.11.2026")  # תאריך האירוע, לא של הבריף
         self.assertEqual(conflicts[0].date_b, "4.11.2026")
         self.assertEqual(conflicts[0].source_b, "יומן")
 
     def test_same_date_no_conflict(self):
-        school = [SchoolEvent(title="מפגש הורים (בדוי)")]
-        self.assertEqual(find_conflicts(school, self.events, "1.11.2026"), [])
+        school = [SchoolEvent(title="מפגש הורים (בדוי)", date="1.11.2026")]
+        self.assertEqual(find_conflicts(school, self.events), [])
+
+    def test_undated_school_event_never_conflicts(self):
+        # אין להמציא לאירוע תאריך (למשל תאריך הבריף) כדי להשוות
+        school = [SchoolEvent(title="טיול שנתי ביום שלישי")]
+        self.assertEqual(find_conflicts(school, self.events), [])
 
 
 class StateTest(unittest.TestCase):
