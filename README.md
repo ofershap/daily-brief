@@ -78,7 +78,7 @@
 
 ### טאב (Tab)
 
-<p align="right"><a href="https://tab.bot/"><img src="assets/cta-tab-dark2.png" alt="פתחו את Tab" width="360" /></a></p>
+<p align="right"><a href="https://tab.bot/"><img src="assets/cta-tab-he.png" alt="פתחו את טאב" width="360" /></a></p>
 
 שולחים לטאב שלכם את הקישור לריפו הזה עם המשפט: "תעשה לי גם כזה".
 
