@@ -6,8 +6,8 @@
 ## צעד 1 — שכפול
 
 ```bash
-git clone https://github.com/ofershap/daily-brief.git
-cd daily-brief
+git clone https://github.com/ofershap/mashov-parent-brief.git
+cd mashov-parent-brief
 ```
 
 ## צעד 2 — תלויות
