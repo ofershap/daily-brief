@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//daily-brief test//EN
+BEGIN:VEVENT
+UID:fictional-1@example.com
+DTSTART;VALUE=DATE:20261104
+SUMMARY:טיול שנתי ביום שלישי
+END:VEVENT
+BEGIN:VEVENT
+UID:fictional-2@example.com
+DTSTART:20261101T090000
+SUMMARY:מפגש הורים (בדוי)
+END:VEVENT
+END:VCALENDAR

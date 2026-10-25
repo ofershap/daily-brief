@@ -53,7 +53,42 @@ def main(argv: list[str] | None = None) -> None:
         from .collectors.mashov import MashovCollector
         brief = MashovCollector().collect()
 
+    # יומן אופציונלי: BRIEF_ICS (נתיב קובץ מקומי או URL). כשל = שורת ⚠️ בבריף.
+    ics_source = os.environ.get("BRIEF_ICS", "")
+    if ics_source:
+        from .collectors.ics import collect as collect_ics, events_on, find_conflicts
+        from datetime import date as _date
+        from .models import SourceStatus
+        try:
+            calendar_events = collect_ics(ics_source)
+            brief.calendar_events = events_on(calendar_events, _date.today())
+            school_events = [event for kid in brief.kids for event in kid.events]
+            brief.conflicts = find_conflicts(
+                school_events, calendar_events, brief.date
+            )
+            brief.sources.append(SourceStatus(name="יומן ICS", ok=True))
+        except Exception as exc:
+            brief.sources.append(SourceStatus(
+                name="יומן ICS", ok=False, detail=f"{type(exc).__name__}: {exc}"
+            ))
+
+    # סמן ריצה אחרונה: הודעות חדשות מסומנות 🆕; אין "חדש" כפול בריצה חוזרת.
+    from .state import load_last_success, save_success
+    state_path = Path(os.environ.get("BRIEF_STATE", "out/state.json"))
+    last_success = load_last_success(state_path)
+    if last_success is not None:
+        from datetime import datetime, timezone
+        for msg in brief.messages:
+            try:
+                sent = datetime.fromisoformat(msg.date)
+                if sent.tzinfo is None:
+                    sent = sent.replace(tzinfo=timezone.utc)
+                msg.is_new = sent > last_success
+            except ValueError:
+                msg.is_new = False  # תאריך לא מפוענח = לא מסומן חדש
+
     text = format_brief(brief)
+    save_success(state_path)  # נכתב רק אחרי הפקה מוצלחת
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8")
         print(f"נכתב: {args.out}", file=sys.stderr)

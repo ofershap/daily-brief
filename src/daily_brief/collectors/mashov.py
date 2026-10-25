@@ -24,7 +24,7 @@ import os
 import sys
 from datetime import date
 
-from ..models import WEEKDAYS_HE, DayBrief, Homework, KidBrief, Lesson
+from ..models import WEEKDAYS_HE, DayBrief, Homework, KidBrief, Lesson, SchoolMessage, SourceStatus
 
 REQUIRED_ENV = ("MASHOV_USERNAME", "MASHOV_PASSWORD", "MASHOV_SEMEL", "MASHOV_KIDS")
 
@@ -37,6 +37,10 @@ _LESSON_TEACHER_KEYS = ("teacher", "teacherName")
 _HOMEWORK_SUBJECT_KEYS = ("subject", "subjectName")
 _HOMEWORK_TITLE_KEYS = ("description", "title", "homework")
 _HOMEWORK_DUE_KEYS = ("dueDate", "due", "date")
+_MSG_SENDER_KEYS = ("sender", "from", "senderName")
+_MSG_SUBJECT_KEYS = ("subject", "title")
+_MSG_DATE_KEYS = ("date", "sentDate", "sendDate")
+_MSG_ATTACH_KEYS = ("hasAttachments", "hasAttachment", "attachments")
 
 
 class CollectorError(SystemExit):
@@ -120,6 +124,11 @@ async def _collect_all(kids: dict[str, str]) -> DayBrief:
                     f"{len(kid.homework)} שיעורי בית.",
                     file=sys.stderr,
                 )
+            # הודעות מורים: get_conversations עם skip/take (הפרמטרים היחידים
+            # המתועדים ב-pymashov). קבצים מצורפים: מסומנים בלבד, לא מורדים.
+            take = int(os.environ.get("MASHOV_MESSAGES_TAKE", "10"))
+            conversations = await client.get_conversations(skip=0, take=take)
+            messages = map_messages(conversations)
     except CollectorError:
         raise
     except Exception as exc:  # התחברות/רשת/שינוי API — נכשל סגור עם סיבה
@@ -128,6 +137,8 @@ async def _collect_all(kids: dict[str, str]) -> DayBrief:
         date=f"{today.day}.{today.month}.{today.year}",
         weekday_he=WEEKDAYS_HE[today.weekday()],
         kids=kid_briefs,
+        messages=messages,
+        sources=[SourceStatus(name="משו״ב", ok=True)],
     )
 
 
@@ -195,3 +206,28 @@ def dedup_lessons(lessons: list[Lesson]) -> list[Lesson]:
             seen.add(key)
             out.append(lesson)
     return out
+
+
+def map_messages(conversations) -> list[SchoolMessage]:
+    """ממפה שיחות דואר משו״ב להודעות. נכשל סגור על מבנה לא מוכר."""
+    rows = _require_list(conversations, "שיחות משו״ב")
+    messages: list[SchoolMessage] = []
+    for raw in rows:
+        if not isinstance(raw, dict):
+            _fail(f"רשומת שיחה לא מוכרת: {str(raw)[:120]}")
+        subject = _first_key(raw, _MSG_SUBJECT_KEYS)
+        if not subject:
+            _fail(f"שיחה בלי נושא מזוהה: {str(raw)[:120]}")
+        attachments = raw.get("attachments")
+        has_attachment = any(bool(raw.get(k)) for k in _MSG_ATTACH_KEYS) or (
+            isinstance(attachments, list) and len(attachments) > 0
+        )
+        messages.append(SchoolMessage(
+            sender=_first_key(raw, _MSG_SENDER_KEYS),
+            subject=subject,
+            date=_first_key(raw, _MSG_DATE_KEYS),
+            has_attachment=has_attachment,
+        ))
+    if rows and not messages:
+        _fail("שיחות משו״ב לא מופו (מבנה לא מוכר) — דרוש כיול.")
+    return messages
