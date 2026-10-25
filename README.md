@@ -1,6 +1,24 @@
-<div dir="rtl">
+<p align="center">
+  <img src="assets/logo.svg" alt="mashov-parent-brief" width="110" height="110" />
+</p>
 
-# בריף בית-ספר יומי להורים (mashov-parent-brief)
+<h1 align="center">mashov-parent-brief</h1>
+
+<p align="center">
+  <strong>בריף בית-ספר יומי ממשו״ב — הודעת בוקר אחת מסודרת להורים, מותקן אצלך עם הבוט שלך.</strong>
+</p>
+
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+  &nbsp;
+  <a href="https://agentskills.io/specification"><img src="https://img.shields.io/badge/Agent_Skills-format-0ea5e9.svg" alt="Agent Skills format" /></a>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue.svg" alt="Python 3.10+" />
+  &nbsp;
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" /></a>
+</p>
+
+<div dir="rtl">
 
 > **גם אתם פותחים את משו״ב כל בוקר כדי לרדוף אחרי מערכת, שיעורי בית והודעות של כמה ילדים — ועדיין מגלים על הטיול רק ביום לפני?**
 
@@ -16,6 +34,10 @@
 </div>
 
 ## איך נראה הבריף
+
+<p align="center">
+  <img src="assets/demo-brief.png" alt="דוגמת בריף בוואטסאפ - נתוני דמו בדויים" width="360" />
+</p>
 
 דוגמה מלאה עם **נתונים בדויים** (ככה נראית הרצת הדמו):
 

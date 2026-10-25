@@ -1,0 +1,21 @@
+# mashov-parent-brief
+
+> Self-hosted daily school brief for Israeli parents: a deterministic Python collector pulls timetable, homework and teacher messages from Mashov (via the open pymashov library), formats one WhatsApp-style morning message per family, and your own bot delivers it. Free, open source (MIT), Hebrew-first docs.
+
+## Key facts
+
+- Demo mode works end to end with fictional data: `pip install -e . && daily-brief --demo`
+- Live Mashov adapter is experimental: timetable/homework shapes verified against a live read-only pull (25.10.2026, fictional fixtures); day-numbering needs one-time calibration (MASHOV_DAY1_IS); conversation envelope backed by public library evidence, not yet live-verified; attachments are marked, never downloaded.
+- No central server, no signup; every user runs their own instance. Connecting a cloud bot or delivery provider moves the chosen data through them.
+- Grades and discipline events are intentionally not collected (privacy decision).
+- Tests: `python -m unittest discover tests` (50 tests, fictional fixtures only).
+
+## Files
+
+- README.md - hero, demo image, status table, FAQ (Hebrew)
+- AGENTS.md - guided onboarding for code agents (clone, deps, config, demo, live test, scheduling)
+- skills/daily-brief/SKILL.md - Agent Skills format instructions
+- recipes/daily-brief.he.md - plain-text recipe for chat-based bots
+- examples/demo-brief.txt - exact demo output
+- CONTRIBUTING.md - contribution rules (no real data ever, tests pass, fail-closed adapters)
+- SECURITY.md - private vulnerability reporting and known limits
