@@ -39,7 +39,7 @@ class MessagesTest(unittest.TestCase):
 
 class CalendarTest(unittest.TestCase):
     def setUp(self):
-        self.events = parse_ics((FIXTURES / "family_calendar.ics").read_text(encoding="utf-8"))
+        self.events = parse_ics((FIXTURES / "family_calendar.ics").read_text(encoding="utf-8")).events
 
     def test_parses_dates_and_titles(self):
         by_title = {e.title: e for e in self.events}
@@ -105,3 +105,123 @@ class EnvLoadTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class IcsAcceptanceTest(unittest.TestCase):
+    """קבלת ICS: חזרות, אזורי זמן, EXDATE, כל-היום, שורות מקופלות —
+    שום דבר לא נשמט או מוזז בשקט; לא-נתמך = אזהרת חלקיות מפורשת."""
+
+    def test_weekly_recurrence_with_count(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT",
+            "UID:x1@t", "DTSTART;VALUE=DATE:20261104",  # רביעי 4.11
+            "SUMMARY:שיעור נגינה (בדוי)",
+            "RRULE:FREQ=WEEKLY;COUNT=3",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        events = parse_ics(ics).events
+        # 3 מועדים: 4.11, 11.11, 18.11 — ולא 25.11
+        self.assertEqual([e.title for e in events_on(events, date(2026, 11, 11))], ["שיעור נגינה (בדוי)"])
+        self.assertEqual([e.title for e in events_on(events, date(2026, 11, 18))], ["שיעור נגינה (בדוי)"])
+        self.assertEqual(events_on(events, date(2026, 11, 25)), [])
+        self.assertEqual(events_on(events, date(2026, 11, 12)), [])
+
+    def test_weekly_byday_and_interval(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x2@t", "DTSTART;VALUE=DATE:20261102",  # שני 2.11
+            "SUMMARY:אימון (בדוי)", "RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=MO,WE",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        events = parse_ics(ics).events
+        self.assertTrue(events_on(events, date(2026, 11, 2)))    # שני שבוע 0
+        self.assertTrue(events_on(events, date(2026, 11, 4)))    # רביעי שבוע 0
+        self.assertEqual(events_on(events, date(2026, 11, 9)), [])   # שבוע 1 — מדולג
+        self.assertTrue(events_on(events, date(2026, 11, 16)))   # שבוע 2
+
+    def test_exdate_excludes_occurrence(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x3@t", "DTSTART;VALUE=DATE:20261104",
+            "SUMMARY:חוג (בדוי)", "RRULE:FREQ=WEEKLY;COUNT=3",
+            "EXDATE;VALUE=DATE:20261111",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        events = parse_ics(ics).events
+        self.assertEqual(events_on(events, date(2026, 11, 11)), [])  # הוחרג
+        self.assertTrue(events_on(events, date(2026, 11, 18)))
+
+    def test_utc_datetime_not_silently_shifted(self):
+        # 22:30 UTC ב-1.11 = 00:30 ב-2.11 בארץ (UTC+2 בשאון חורף)
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x4@t", "DTSTART:20261101T223000Z",
+            "SUMMARY:שידור חי (בדוי)",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        events = parse_ics(ics).events
+        self.assertEqual(events[0].date, "2.11.2026")
+
+    def test_tzid_datetime_keeps_written_date(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x5@t", "DTSTART;TZID=Asia/Jerusalem:20261101T090000",
+            "SUMMARY:בוקר (בדוי)",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        events = parse_ics(ics).events
+        self.assertEqual(events[0].date, "1.11.2026")
+
+    def test_unsupported_recurrence_warns_and_shows_first_only(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x6@t", "DTSTART;VALUE=DATE:20261104",
+            "SUMMARY:יום הולדת (בדוי)", "RRULE:FREQ=YEARLY",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        result = parse_ics(ics)
+        self.assertEqual(result.events[0].date, "4.11.2026")
+        self.assertTrue(any("לא נתמכת" in w for w in result.warnings))
+        self.assertEqual(events_on(result.events, date(2027, 11, 4)), [])
+
+    def test_event_without_dtstart_warns_not_dropped(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x7@t", "SUMMARY:ללא תאריך (בדוי)",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        result = parse_ics(ics)
+        self.assertEqual(result.events, [])
+        self.assertTrue(any("בלי DTSTART" in w for w in result.warnings))
+
+    def test_folded_summary_line(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x8@t", "DTSTART;VALUE=DATE:20261104",
+            "SUMMARY:כותרת ארוכה מאוד שנמשכת",
+            " בשורה הבאה (בדוי)",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        result = parse_ics(ics)
+        self.assertEqual(result.events[0].title, "כותרת ארוכה מאוד שנמשכתבשורה הבאה (בדוי)")
+
+    def test_rdate_warns(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x9@t", "DTSTART;VALUE=DATE:20261104",
+            "SUMMARY:מיוחד (בדוי)", "RDATE;VALUE=DATE:20261204",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        result = parse_ics(ics)
+        self.assertTrue(any("RDATE" in w for w in result.warnings))
+
+    def test_until_bounds_recurrence(self):
+        ics = "\r\n".join([
+            "BEGIN:VCALENDAR", "BEGIN:VEVENT",
+            "UID:x10@t", "DTSTART;VALUE=DATE:20261104",
+            "SUMMARY:סידרה (בדוי)", "RRULE:FREQ=DAILY;UNTIL=20261106",
+            "END:VEVENT", "END:VCALENDAR",
+        ])
+        events = parse_ics(ics).events
+        self.assertTrue(events_on(events, date(2026, 11, 6)))
+        self.assertEqual(events_on(events, date(2026, 11, 7)), [])

@@ -60,11 +60,16 @@ def main(argv: list[str] | None = None) -> None:
         from datetime import date as _date
         from .models import SourceStatus
         try:
-            calendar_events = collect_ics(ics_source)
-            brief.calendar_events = events_on(calendar_events, _date.today())
+            ics = collect_ics(ics_source)
+            brief.calendar_events = events_on(ics.events, _date.today())
             school_events = [event for kid in brief.kids for event in kid.events]
-            brief.conflicts = find_conflicts(school_events, calendar_events)
-            brief.sources.append(SourceStatus(name="יומן ICS", ok=True))
+            brief.conflicts = find_conflicts(school_events, ics.events)
+            brief.warnings.extend(ics.warnings)
+            # יומן שחלק מתכונותיו לא נתמכות = מקור חלקי, לא "יומן מלא"
+            brief.sources.append(SourceStatus(
+                name="יומן ICS", ok=not ics.warnings,
+                detail="; ".join(ics.warnings)[:200] if ics.warnings else "",
+            ))
         except Exception as exc:
             brief.sources.append(SourceStatus(
                 name="יומן ICS", ok=False, detail=f"{type(exc).__name__}: {exc}"

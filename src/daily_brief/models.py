@@ -44,8 +44,10 @@ class SchoolMessage:
 @dataclass
 class CalendarEvent:
     title: str
-    date: str          # DD.MM.YYYY
+    date: str          # DD.MM.YYYY (מועד ראשון; גם לאירוע חוזר)
     source: str = "יומן"
+    rrule: str = ""    # RRULE גולמי אם נתמך (DAILY/WEEKLY פשוט), אחרת ""
+    exdates: tuple = ()  # תאריכי ISO מוחרגים (EXDATE)
 
 
 @dataclass
