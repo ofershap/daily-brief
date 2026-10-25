@@ -1,4 +1,8 @@
 [
-  {"subject": "מתמטיקה", "description": "עמ׳ 42 תרגילים 1-5", "dueDate": "3.11.2026"},
-  {"subject": "אנגלית", "description": "Workbook p. 10", "dueDate": ""}
+  {"lessonId": 1001, "lessonDate": "2026-10-29T00:00:00", "lesson": 2,
+   "homework": "עמ׳ 42 תרגילים 1-5", "groupId": 101, "remark": "להביא מחשבון",
+   "studentGuid": "00000000-0000-4000-8000-000000000010", "subjectName": "מתמטיקה"},
+  {"lessonId": 1002, "lessonDate": "2026-10-30T00:00:00", "lesson": 4,
+   "homework": "Workbook p. 10", "groupId": 102, "remark": "",
+   "studentGuid": "00000000-0000-4000-8000-000000000010", "subjectName": "אנגלית"}
 ]

@@ -21,7 +21,8 @@ class Lesson:
 class Homework:
     subject: str
     title: str
-    due: str = ""      # "3.11" או ""
+    due: str = ""      # "3.11" או ""; רק אם המקור מספק מועד הגשה אמיתי
+    given: str = ""    # "29.10.2026" — תאריך מתן, כפי שהמקור מספק
 
 
 @dataclass

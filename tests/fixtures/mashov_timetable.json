@@ -1,9 +1,20 @@
 [
-  {"day": 1, "lessons": [
-    {"time": "08:00", "subject": "מתמטיקה", "teacher": "ד״ר לוי"},
-    {"time": "09:00", "subject": "אנגלית", "teacher": ""}
-  ]},
-  {"day": 2, "lessons": [
-    {"time": "08:00", "subject": "היסטוריה", "teacher": "גב׳ ברק"}
-  ]}
+  {
+    "timeTable": {"groupId": 101, "day": 1, "lesson": 1, "roomNum": "חדר 12", "weeks": 0},
+    "groupDetails": {"groupId": 101, "groupName": "DEMO GROUP A", "subjectName": "מתמטיקה",
+      "groupTeachers": [{"teacherGuid": "00000000-0000-4000-8000-000000000001", "teacherName": "ד״ר לוי"}],
+      "groupInactiveTeachers": []}
+  },
+  {
+    "timeTable": {"groupId": 102, "day": 1, "lesson": 2, "roomNum": "חדר 7", "weeks": 0},
+    "groupDetails": {"groupId": 102, "groupName": "DEMO GROUP B", "subjectName": "אנגלית",
+      "groupTeachers": [{"teacherGuid": "00000000-0000-4000-8000-000000000002", "teacherName": "גב׳ ברק"}],
+      "groupInactiveTeachers": []}
+  },
+  {
+    "timeTable": {"groupId": 103, "day": 2, "lesson": 1, "roomNum": "חדר 3", "weeks": 0},
+    "groupDetails": {"groupId": 103, "groupName": "DEMO GROUP C", "subjectName": "היסטוריה",
+      "groupTeachers": [{"teacherGuid": "00000000-0000-4000-8000-000000000003", "teacherName": "מר כהן"}],
+      "groupInactiveTeachers": []}
+  }
 ]

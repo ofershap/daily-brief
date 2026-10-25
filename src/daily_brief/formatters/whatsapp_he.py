@@ -61,7 +61,8 @@ def _format_kid(kid: KidBrief, emoji: str) -> list[str]:
         lines.append(f"🕐 *מערכת:* {lessons}")
     if kid.homework:
         homework = " · ".join(
-            f"{hw.subject} — {hw.title}" + (f" (להגשה {hw.due})" if hw.due else "")
+            f"{hw.subject} — {hw.title}"
+            + (f" (להגשה {hw.due})" if hw.due else (f" (ניתן {hw.given})" if hw.given else ""))
             for hw in kid.homework
         )
         lines.append(f"📚 *שיעורי בית:* {homework}")
