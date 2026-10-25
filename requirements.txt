@@ -1,0 +1,3 @@
+# נדרש רק למתאם משו״ב החי. מצב הדמו לא דורש שום תלות.
+# Only needed for the live Mashov adapter. Demo mode has no dependencies.
+pymashov>=0.1

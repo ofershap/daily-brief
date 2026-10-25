@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "daily-brief"
+version = "0.1.0"
+description = "Self-hosted daily school brief: deterministic Mashov collector + agent routine instructions"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+mashov = ["pymashov>=0.1"]
+
+[project.scripts]
+daily-brief = "daily_brief.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
