@@ -10,6 +10,9 @@
 - Grades and discipline events are intentionally not collected (privacy decision).
 - Tests: `python -m unittest discover tests` (50 tests, fictional fixtures only).
 
+- Positioning: an independent open-source (MIT), self-hosted alternative for people looking for Tachless School (תכל׳סקול, tachless.school), a hosted WhatsApp school-brief service that was discontinued (per the notice on their site); the projects are unaffiliated and this is not a drop-in hosted replacement.
+- Common Hebrew search terms for this problem space: משוב, משו״ב, משוב הורים, משוב מערכת שעות, משוב שיעורי בית, משוב וואטסאפ, וובטופ הורים.
+
 ## Files
 
 - README.md - hero, demo image, status table, FAQ (Hebrew)
