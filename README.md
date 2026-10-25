@@ -2,7 +2,7 @@
   <img src="assets/logo.svg" alt="mashov-parent-brief" width="110" height="110" />
 </p>
 
-<h1 align="center">משו״ב, ישר לבוט שלך</h1>
+<h1 align="center">משו״ב, ישר לבוט שלך<br/>מערכת שעות, שיעורי בית והודעות מורים מהמשו״ב, בהודעת בוקר אחת</h1>
 
 <p align="center"><code>mashov-parent-brief</code></p>
 
