@@ -72,13 +72,13 @@
 
 ### אינסטינקט (איציק)
 
-<a href="https://wa.me/16508702892?text=%D7%AA%D7%A2%D7%A9%D7%94+%D7%9C%D7%99+%D7%92%D7%9D+%D7%9B%D7%96%D7%94%3A+https%3A%2F%2Fgithub.com%2Fofershap%2Fmashov-parent-brief"><img src="assets/cta-itzik-wa.png" alt="שלחו לאיציק בוואטסאפ" width="360" /></a>
+<p align="right"><a href="https://wa.me/16508702892?text=%D7%AA%D7%A2%D7%A9%D7%94+%D7%9C%D7%99+%D7%92%D7%9D+%D7%9B%D7%96%D7%94%3A+https%3A%2F%2Fgithub.com%2Fofershap%2Fmashov-parent-brief"><img src="assets/cta-itzik-wa2.png" alt="שלחו לאיציק בוואטסאפ" width="360" /></a></p>
 
 לחיצה פותחת וואטסאפ עם הודעה מוכנה לאינסטינקט שלכם - שולחים, וממשיכים איתו משם.
 
 ### טאב (Tab)
 
-<a href="https://tab.bot/"><img src="assets/cta-tab-dark.png" alt="פתחו את Tab" width="360" /></a>
+<p align="right"><a href="https://tab.bot/"><img src="assets/cta-tab-dark2.png" alt="פתחו את Tab" width="360" /></a></p>
 
 שולחים לטאב שלכם את הקישור לריפו הזה עם המשפט: "תעשה לי גם כזה".
 
