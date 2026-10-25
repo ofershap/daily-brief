@@ -25,10 +25,10 @@ class FormatterTest(unittest.TestCase):
     def test_lessons_and_homework_lines(self):
         self.assertIn("🕐 *מערכת:*", self.text)
         self.assertIn("08:00 מתמטיקה (ד״ר לוי)", self.text)
-        self.assertIn("📚 *שיעורי בית:* מתמטיקה - עמ׳ 42 תרגילים 1-5 (להגשה 3.11)", self.text)
+        self.assertIn("📚 *שיעורי בית:* מתמטיקה — עמ׳ 42 תרגילים 1-5 (להגשה 3.11)", self.text)
 
     def test_events_and_notes(self):
-        self.assertIn("📣 *אירוע:* טיול שנתי (3.11.2026) - להביא אישור הורה חתום", self.text)
+        self.assertIn("📣 *אירוע:* טיול שנתי (3.11.2026) — להביא אישור הורה חתום", self.text)
         self.assertIn("✏️ מחר חינוך גופני", self.text)
 
     def test_whatsapp_bold_markers_kept_literal(self):

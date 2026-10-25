@@ -41,11 +41,11 @@ def collect() -> DayBrief:
                     Lesson(time="09:00", subject="מדעים", room="מעבדה 2"),
                 ],
                 homework=[],
-                notes=["מחר חינוך גופני - להביא בגדי ספורט"],
+                notes=["מחר חינוך גופני — להביא בגדי ספורט"],
             ),
         ],
         messages=[
-            SchoolMessage(sender="המורה שרה", subject="אישור הורה לטיול - נא להחזיר חתום", date="31.10.2026", is_new=True),
+            SchoolMessage(sender="המורה שרה", subject="אישור הורה לטיול — נא להחזיר חתום", date="31.10.2026", is_new=True),
             SchoolMessage(sender="מזכירות", subject="טופס הצטרפות לחוג מדעים", date="30.10.2026", has_attachment=True),
         ],
         calendar_events=[
