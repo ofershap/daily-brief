@@ -1,0 +1,9 @@
+[
+  {"day": 1, "lessons": [
+    {"time": "08:00", "subject": "מתמטיקה", "teacher": "ד״ר לוי"},
+    {"time": "09:00", "subject": "אנגלית", "teacher": ""}
+  ]},
+  {"day": 2, "lessons": [
+    {"time": "08:00", "subject": "היסטוריה", "teacher": "גב׳ ברק"}
+  ]}
+]

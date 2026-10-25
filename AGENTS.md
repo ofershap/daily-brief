@@ -14,7 +14,7 @@ cd daily-brief
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
-pip install pymashov   # נדרש רק למתאם משו״ב; מצב הדמו לא דורש כלום
+pip install -e ".[mashov]"   # כולל pymashov למתאם; מצב הדמו לא דורש תלויות
 ```
 
 ## צעד 3 — קונפיגורציה
@@ -31,7 +31,7 @@ cp .env.example .env
 ## צעד 4 — הרצת דמו (בלי התחברות)
 
 ```bash
-python -m daily_brief --demo
+daily-brief --demo
 ```
 
 צפוי: בריף עברי בדוי עם שני ילדים ("דנה" ו"איתמר"). אם זה עובד, התשתית תקינה.
@@ -39,7 +39,7 @@ python -m daily_brief --demo
 ## צעד 5 — מבחן חיה אחד
 
 ```bash
-python -m daily_brief --collector mashov
+daily-brief --collector mashov
 ```
 
 - אימות שהתחברה, שהילדים הנכונים חזרו, ושהמערכת מתאימה ליום הנוכחי.
@@ -53,7 +53,7 @@ python -m daily_brief --collector mashov
 - תזמון מקומי אצל המשתמש (cron או equivalent), למשל כל בוקר יום לימודים:
 
 ```cron
-0 7 * * 0-4  cd /path/to/daily-brief && .venv/bin/python -m daily_brief --collector mashov --out out/brief.txt
+0 7 * * 0-4  cd /path/to/daily-brief && .venv/bin/daily-brief --collector mashov --out out/brief.txt
 ```
 
 - חיבור הבוט של המשתמש:
