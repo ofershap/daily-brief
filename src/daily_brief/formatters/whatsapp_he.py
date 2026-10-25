@@ -13,7 +13,7 @@ _EMOJI = ["👧", "👦", "🧒", "👶"]
 
 
 def format_brief(brief: DayBrief) -> str:
-    lines: list[str] = [f"🎒 *בריף בית ספר — יום {brief.weekday_he}, {brief.date}*", ""]
+    lines: list[str] = [f"🎒 *בריף בית ספר - יום {brief.weekday_he}, {brief.date}*", ""]
     for index, kid in enumerate(brief.kids):
         lines.extend(_format_kid(kid, _EMOJI[index % len(_EMOJI)]))
         lines.append("")
@@ -32,7 +32,7 @@ def format_brief(brief: DayBrief) -> str:
         lines.append("")
     for conflict in brief.conflicts:
         lines.append(
-            f"⚠️ *סתירה בין מקורות:* {conflict.title} — "
+            f"⚠️ *סתירה בין מקורות:* {conflict.title} - "
             f"{conflict.source_a} אומר {conflict.date_a}, {conflict.source_b} אומר {conflict.date_b}"
         )
     if brief.conflicts:
@@ -61,13 +61,13 @@ def _format_kid(kid: KidBrief, emoji: str) -> list[str]:
         lines.append(f"🕐 *מערכת:* {lessons}")
     if kid.homework:
         homework = " · ".join(
-            f"{hw.subject} — {hw.title}"
+            f"{hw.subject} - {hw.title}"
             + (f" (להגשה {hw.due})" if hw.due else (f" (ניתן {hw.given})" if hw.given else ""))
             for hw in kid.homework
         )
         lines.append(f"📚 *שיעורי בית:* {homework}")
     for event in kid.events:
-        note = f" — {event.note}" if event.note else ""
+        note = f" - {event.note}" if event.note else ""
         date = f" ({event.date})" if event.date else ""
         lines.append(f"📣 *אירוע:* {event.title}{date}{note}")
     for note in kid.notes:
