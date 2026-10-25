@@ -12,7 +12,7 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
-mashov = ["pymashov>=0.1"]
+mashov = ["pymashov>=0.0.2"]
 
 [project.scripts]
 daily-brief = "daily_brief.cli:main"
